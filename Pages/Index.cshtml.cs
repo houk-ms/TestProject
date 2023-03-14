@@ -9,22 +9,22 @@ namespace TestProject.Pages
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
-        private readonly BlobContainerClient _blobContainerClient;
+        private readonly BlobServiceClient _blobServiceClient;
         public string ContainerName { get; set; } = string.Empty;
 
-        public IndexModel(ILogger<IndexModel> logger, BlobContainerClient blobContainerClient)
+        public IndexModel(ILogger<IndexModel> logger, BlobServiceClient BlobServiceClient)
         {
             _logger = logger;
-            _blobContainerClient = blobContainerClient;
+            _blobServiceClient = BlobServiceClient;
         }
 
         public void OnGet()
         {
             try
             {
-                if (_blobContainerClient != null)
+                if (_blobServiceClient != null)
                 {
-                    var containers = _blobContainerClient.GetBlobs().ToList();
+                    var containers = _blobServiceClient.GetBlobContainers().ToList();
                     if (containers.Any())
                     {
                         ContainerName = containers[0].Name;
